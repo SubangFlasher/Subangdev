@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subang-Dev</title>
+    <title>Subang-Dev | Digital Service</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -14,7 +14,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #000000, #1a1a1a);
+            background: #000;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -25,6 +25,16 @@
             color: #ffffff;
         }
 
+        /* Matrix Canvas Styling */
+        #matrix {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+
         .glitch-bg {
             position: absolute;
             top: 0;
@@ -33,28 +43,29 @@
             height: 100%;
             background: repeating-linear-gradient(
                 0deg,
-                rgba(255, 0, 0, 0.1),
-                rgba(255, 0, 0, 0.1) 2px,
+                rgba(255, 0, 0, 0.05),
+                rgba(255, 0, 0, 0.05) 2px,
                 transparent 2px,
                 transparent 4px
             );
             opacity: 0.3;
             z-index: -1;
             animation: flicker 3s infinite;
+            pointer-events: none;
         }
 
         .container {
             max-width: 800px;
             width: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85);
             border: 2px solid #ff0000;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
             position: relative;
+            backdrop-filter: blur(5px);
         }
 
-       
         .cover-bg {
             height: 250px;
             position: relative;
@@ -168,6 +179,7 @@
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
             color: #ffffff;
+            background: #ff0000;
         }
 
         @keyframes pulse {
@@ -201,6 +213,7 @@
             box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
             animation: scan 4s linear infinite;
             z-index: 10;
+            pointer-events: none;
         }
 
         @media (max-width: 600px) {
@@ -210,9 +223,11 @@
     </style>
 </head>
 <body>
+
     <div class="glitch-bg"></div>
     
     <div class="container">
+    	   <canvas id="matrix"></canvas>
         <div class="scan-line"></div>
         
         <div class="cover-bg">
@@ -243,7 +258,7 @@
             <a href="https://www.tiktok.com/@subang_flasher" class="link-btn">
                 <i class="fab fa-tiktok"></i> TikTok
             </a>
-            <a href="#" class="link-btn">
+            <a href="https://youtube.com/@subangflasher" class="link-btn">
                 <i class="fab fa-youtube"></i> YouTube
             </a>
             <a href="https://gsmunlockingindonesiateam.com" class="link-btn">
@@ -259,6 +274,44 @@
     </div>
 
     <script>
+        // Matrix Animation Logic
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%\"'#&_(),.;:?!\\|{}<>[]^~";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#0F0"; // Warna Hijau Hacker
+            ctx.font = fontSize + "px monospace";
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = characters.charAt(Math.floor(Math.random() * characters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 35);
+
+        // Profile Glitch Effect
         setInterval(() => {
             const profilePic = document.querySelector('.profile-pic');
             if (Math.random() > 0.8) {
@@ -271,4 +324,3 @@
     </script>
 </body>
 </html>
-
