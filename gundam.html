@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subang-Dev</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+
+        body {
+            background: linear-gradient(135deg, #000000, #1a1a1a);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+            color: #ffffff;
+        }
+
+        .glitch-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(255, 0, 0, 0.1),
+                rgba(255, 0, 0, 0.1) 2px,
+                transparent 2px,
+                transparent 4px
+            );
+            opacity: 0.3;
+            z-index: -1;
+            animation: flicker 3s infinite;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #ff0000;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+            position: relative;
+        }
+
+       
+        .cover-bg {
+            height: 250px;
+            position: relative;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .cover-slider {
+            display: flex;
+            width: 400%; 
+            height: 100%;
+            animation: slideImages 20s infinite; 
+        }
+
+        .cover-slider img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7) contrast(1.2);
+        }
+
+        @keyframes slideImages {
+            0%, 30% { transform: translateX(0%); }
+            33%, 63% { transform: translateX(-33.33%); }
+            66%, 96% { transform: translateX(-66.66%); }
+            100% { transform: translateX(0%); }
+        }
+
+        .profile-container {
+            position: relative;
+            margin-top: -80px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            z-index: 5;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid #ff0000;
+            background: #222;
+            overflow: hidden; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.7);
+            transition: all 0.3s ease;
+        }
+
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-pic:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.9);
+        }
+
+        .running-text {
+            margin-top: 20px;
+            background: #000000;
+            padding: 8px 20px;
+            border: 2px solid #ff0000;
+            border-radius: 5px;
+            overflow: hidden;
+            white-space: nowrap;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .running-text span {
+            display: inline-block;
+            color: #ff0000;
+            font-weight: bold;
+            font-size: 16px;
+            letter-spacing: 3px;
+            animation: scrollText 25s linear infinite;
+        }
+
+        .links-container {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .link-btn {
+            background: linear-gradient(45deg, #1a0000, #330000);
+            border: 2px solid #ff0000;
+            border-radius: 10px;
+            padding: 15px 25px;
+            color: #ff0000;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .link-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+            color: #ffffff;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.7); }
+            50% { box-shadow: 0 0 30px rgba(255, 0, 0, 0.9); }
+            100% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.7); }
+        }
+
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 0.3; }
+            20%, 24%, 55% { opacity: 0.1; }
+        }
+
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
+        @keyframes scrollText {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 0, 0, 0.7);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+            animation: scan 4s linear infinite;
+            z-index: 10;
+        }
+
+        @media (max-width: 600px) {
+            .cover-bg { height: 200px; }
+            .profile-pic { width: 120px; height: 120px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="glitch-bg"></div>
+    
+    <div class="container">
+        <div class="scan-line"></div>
+        
+        <div class="cover-bg">
+            <div class="cover-slider">
+                <img src="https://i.ibb.co.com/MDCT6BtB/Black-white-Minimalist-The-Dark-System-Science-Tech-Computer-Youtube-Thum-20260106-230002-0000.png" alt="Sampul 1">
+                <img src="https://i.ibb.co.com/YFJCxypc/Green-Bold-Indian-Jungle-You-Tube-Thumbnail-20251223-092938-0000.png" alt="Sampul 2">
+                <img src="https://i.ibb.co.com/nNNKcznt/Green-Bold-Indian-Jungle-You-Tube-Thumbnail-20251219-220322-0000.png" alt="Sampul 3">
+                <img src="https://i.ibb.co.com/G3dd521s/Kanyaah-20251214-064914-0000.png" alt="Sampul 4">
+            </div>
+        </div>
+        
+        <div class="profile-container">
+            <div class="profile-pic">
+                <img src="https://i.ibb.co.com/21YJzxwm/Green-And-White-Illustration-Fast-Delivery-Instagram-Story-20250922-150456-0000.png" alt="Profile Subang Dev">
+            </div>
+            <div class="running-text">
+                <span>GSM UNLOCKING INDONESIA BY SUBANG DEV • REMOTE • ACTIVASI TOOL AND SCHEMATIC • DIGITAL SERVICE • LAYANAN WEBSITE AND APLIKASI</span>
+            </div>
+        </div>
+        
+        <div class="links-container">
+            <a href="https://wa.me/6281223742357" class="link-btn">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+            <a href="https://t.me/Badakservice26" class="link-btn">
+                <i class="fab fa-telegram"></i> Telegram
+            </a>
+            <a href="https://www.tiktok.com/@subang_flasher" class="link-btn">
+                <i class="fab fa-tiktok"></i> TikTok
+            </a>
+            <a href="#" class="link-btn">
+                <i class="fab fa-youtube"></i> YouTube
+            </a>
+            <a href="https://gsmunlockingindonesiateam.com" class="link-btn">
+                <i class="fas fa-globe"></i> Website <br>GSM UNLOCKING 
+            </a>
+            <a href="https://cekceirgsmindonesia.com" class="link-btn">
+                <i class="fas fa-globe"></i> Website <br>Cek Ceir
+            </a>
+            <a href="https://t.me/SubangFlasher/3" class="link-btn">
+                <i class="fas fa-file"></i> Testimoni
+            </a>
+        </div>
+    </div>
+
+    <script>
+        setInterval(() => {
+            const profilePic = document.querySelector('.profile-pic');
+            if (Math.random() > 0.8) {
+                profilePic.style.transform = 'translate(' + (Math.random() * 4 - 2) + 'px, ' + (Math.random() * 4 - 2) + 'px)';
+                setTimeout(() => {
+                    profilePic.style.transform = 'translate(0,0)';
+                }, 50);
+            }
+        }, 1500);
+    </script>
+</body>
+</html>
