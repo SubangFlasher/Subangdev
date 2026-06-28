@@ -3,120 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subang-Dev | Digital Service</title>
+    <title>Subang-Dev | Premium Digital Service</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Courier New', monospace;
         }
 
         body {
-            background: #000;
+            background: #050508;
+            font-family: 'Rajdhani', sans-serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            position: relative;
+            padding: 25px 15px;
             overflow-x: hidden;
             color: #ffffff;
+            position: relative;
         }
 
-        /* Matrix Canvas Styling */
+        /* Matrix Canvas Latar Belakang */
         #matrix {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -2;
+            z-index: 1;
+            opacity: 0.15;
+            pointer-events: none;
         }
 
-        .glitch-bg {
-            position: absolute;
+        /* Overlay Efek Garis TV Jadul / Scanline Premium */
+        .cyber-overlay {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(255, 0, 0, 0.05),
-                rgba(255, 0, 0, 0.05) 2px,
-                transparent 2px,
-                transparent 4px
-            );
-            opacity: 0.3;
-            z-index: -1;
-            animation: flicker 3s infinite;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 4px, 6px 100%;
+            z-index: 999;
             pointer-events: none;
         }
 
+        /* Container Utama */
         .container {
-            max-width: 800px;
+            max-width: 680px;
             width: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            border: 2px solid #ff0000;
-            border-radius: 15px;
+            background: rgba(10, 10, 15, 0.75);
+            border: 1px solid rgba(255, 0, 55, 0.3);
+            border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+            box-shadow: 0 0 40px rgba(255, 0, 55, 0.15), inset 0 0 20px rgba(255, 0, 55, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             position: relative;
-            backdrop-filter: blur(5px);
+            z-index: 10;
+            animation: fadeInContainer 1.2s ease-out;
         }
 
+        /* Header / Cover Slider */
         .cover-bg {
-            height: 250px;
+            height: 220px;
             position: relative;
             overflow: hidden;
-            background: #000;
+            border-bottom: 2px solid rgba(255, 0, 55, 0.5);
         }
 
         .cover-slider {
             display: flex;
             width: 400%; 
             height: 100%;
-            animation: slideImages 20s infinite; 
+            animation: slideImages 25s infinite ease-in-out; 
         }
 
         .cover-slider img {
-            width: 100%;
+            width: 25%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(0.7) contrast(1.2);
+            filter: brightness(0.6) contrast(1.1) sepia(30%) hue-rotate(320deg);
         }
 
         @keyframes slideImages {
-            0%, 30% { transform: translateX(0%); }
-            33%, 63% { transform: translateX(-33.33%); }
-            66%, 96% { transform: translateX(-66.66%); }
+            0%, 20% { transform: translateX(0%); }
+            25%, 45% { transform: translateX(-25%); }
+            50%, 70% { transform: translateX(-50%); }
+            75%, 95% { transform: translateX(-75%); }
             100% { transform: translateX(0%); }
         }
 
+        /* Profile Section */
         .profile-container {
             position: relative;
-            margin-top: -80px;
+            margin-top: -75px;
             display: flex;
-            justify-content: center;
             flex-direction: column;
             align-items: center;
+            padding: 0 20px;
+        }
+
+        .profile-pic-wrapper {
+            position: relative;
             z-index: 5;
         }
 
         .profile-pic {
-            width: 150px;
-            height: 150px;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
-            border: 4px solid #ff0000;
-            background: #222;
+            border: 3px solid #ff0037;
+            background: #0a0a0f;
             overflow: hidden; 
             display: flex;
             justify-content: center;
             align-items: center;
-            animation: pulse 2s infinite;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.7);
-            transition: all 0.3s ease;
+            box-shadow: 0 0 30px rgba(255, 0, 55, 0.6);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .profile-pic img {
@@ -125,76 +132,154 @@
             object-fit: cover;
         }
 
-        .profile-pic:hover {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.9);
+        .profile-pic-wrapper:hover .profile-pic {
+            transform: scale(1.08) rotate(3deg);
+            box-shadow: 0 0 45px rgba(255, 0, 55, 0.9);
+            border-color: #ffffff;
         }
 
+        /* Badge Verifikasi Online */
+        .online-badge {
+            position: absolute;
+            bottom: 5px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            background: #00ff66;
+            border: 3px solid #0a0a0f;
+            border-radius: 50%;
+            box-shadow: 0 0 15px #00ff66;
+            z-index: 6;
+            animation: pulseGreen 2s infinite;
+        }
+
+        /* Running Text Elegan */
         .running-text {
             margin-top: 20px;
-            background: #000000;
-            padding: 8px 20px;
-            border: 2px solid #ff0000;
-            border-radius: 5px;
+            background: rgba(255, 0, 55, 0.05);
+            padding: 10px 20px;
+            border-top: 1px solid rgba(255, 0, 55, 0.3);
+            border-bottom: 1px solid rgba(255, 0, 55, 0.3);
             overflow: hidden;
             white-space: nowrap;
-            width: 90%;
-            max-width: 500px;
+            width: 100%;
+            box-shadow: inset 0 0 15px rgba(255, 0, 55, 0.1);
         }
 
         .running-text span {
             display: inline-block;
-            color: #ff0000;
-            font-weight: bold;
-            font-size: 16px;
-            letter-spacing: 3px;
-            animation: scrollText 25s linear infinite;
+            color: #ff3366;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: scrollText 30s linear infinite;
+            text-shadow: 0 0 8px rgba(255, 51, 102, 0.6);
         }
 
+        /* Links Buttons Container */
         .links-container {
-            padding: 30px;
+            padding: 30px 25px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 16px;
         }
 
+        /* Tombol Link Beranimasi Modern */
         .link-btn {
-            background: linear-gradient(45deg, #1a0000, #330000);
-            border: 2px solid #ff0000;
-            border-radius: 10px;
-            padding: 15px 25px;
-            color: #ff0000;
+            background: linear-gradient(135deg, rgba(20, 10, 15, 0.8), rgba(40, 10, 20, 0.6));
+            border: 1px solid rgba(255, 0, 55, 0.4);
+            border-radius: 14px;
+            padding: 16px 24px;
+            color: #ffffff;
             text-decoration: none;
-            font-size: 18px;
-            font-weight: bold;
-            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 15px;
             position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            letter-spacing: 1.5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .link-btn i {
+            font-size: 20px;
+            color: #ff0037;
+            transition: all 0.4s ease;
+            width: 25px;
+            text-align: center;
+            filter: drop-shadow(0 0 5px rgba(255, 0, 55, 0.6));
+        }
+
+        /* Efek Kilauan Cahaya (Shimmer) Pas Hover */
+        .link-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: skewX(-20deg);
+            transition: 0.6s;
+        }
+
+        .link-btn:hover::before {
+            left: 150%;
         }
 
         .link-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+            transform: translateY(-4px);
+            border-color: #ff0037;
             color: #ffffff;
-            background: #ff0000;
+            background: linear-gradient(135deg, #ff0037, #b30024);
+            box-shadow: 0 8px 25px rgba(255, 0, 55, 0.5);
         }
 
-        @keyframes pulse {
-            0% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.7); }
-            50% { box-shadow: 0 0 30px rgba(255, 0, 0, 0.9); }
-            100% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.7); }
+        .link-btn:hover i {
+            color: #ffffff;
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 8px #ffffff);
         }
 
-        @keyframes flicker {
-            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 0.3; }
-            20%, 24%, 55% { opacity: 0.1; }
+        /* Judul teks kecil di dalam tombol jika ada <br> */
+        .link-btn br {
+            display: none; /* dihilangkan agar lebih rapi kesamping */
+        }
+
+        /* Scanline Bergerak Mendatar */
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 55, 0.8), transparent);
+            box-shadow: 0 0 12px #ff0037;
+            animation: scan 6s linear infinite;
+            z-index: 12;
+            pointer-events: none;
+        }
+
+        /* Daftar Animasi Keyframes */
+        @keyframes fadeInContainer {
+            0% { opacity: 0; transform: translateY(30px) scale(0.98); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes pulseGreen {
+            0% { box-shadow: 0 0 0 0 rgba(0, 255, 102, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 255, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 255, 102, 0); }
         }
 
         @keyframes scan {
-            0% { top: 0; }
+            0% { top: -10px; }
             100% { top: 100%; }
         }
 
@@ -203,31 +288,21 @@
             100% { transform: translateX(-100%); }
         }
 
-        .scan-line {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: rgba(255, 0, 0, 0.7);
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
-            animation: scan 4s linear infinite;
-            z-index: 10;
-            pointer-events: none;
-        }
-
+        /* Responsive Tweak */
         @media (max-width: 600px) {
-            .cover-bg { height: 200px; }
-            .profile-pic { width: 120px; height: 120px; }
+            .cover-bg { height: 160px; }
+            .profile-pic { width: 110px; height: 110px; }
+            .profile-container { margin-top: -60px; }
+            .link-btn { padding: 14px 18px; font-size: 13px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="glitch-bg"></div>
+    <canvas id="matrix"></canvas>
+    <div class="cyber-overlay"></div>
     
     <div class="container">
-    	   <canvas id="matrix"></canvas>
         <div class="scan-line"></div>
         
         <div class="cover-bg">
@@ -240,65 +315,69 @@
         </div>
         
         <div class="profile-container">
-            <div class="profile-pic">
-                <img src="https://i.ibb.co.com/21YJzxwm/Green-And-White-Illustration-Fast-Delivery-Instagram-Story-20250922-150456-0000.png" alt="Profile Subang Dev">
+            <div class="profile-pic-wrapper">
+                <div class="profile-pic">
+                    <img src="https://i.ibb.co.com/21YJzxwm/Green-And-White-Illustration-Fast-Delivery-Instagram-Story-20250922-150456-0000.png" alt="Profile Subang Dev">
+                </div>
+                <div class="online-badge"></div>
             </div>
+            
             <div class="running-text">
                 <span>WELCOME TO GSM UNLOCKING INDONESIA BY SUBANG DEV • REMOTE • ACTIVASI TOOL AND SCHEMATIC • DIGITAL SERVICE • LAYANAN WEBSITE AND APLIKASI</span>
             </div>
         </div>
         
         <div class="links-container">
-        	<a href="https://macrotunnel.serv00.net/" class="link-btn">
-                <i class="fab fa-ulocktool"></i> INSTAL API SC OTOMATIS
+            <a href="https://macrotunnel.serv00.net/" class="link-btn">
+                <i class="fas fa-magic"></i> INSTAL API SC OTOMATIS
             </a>
             <a href="https://subangflasher.github.io/ListMember/" class="link-btn">
-                 <i class="fab fa-ulocktool"></i> JOIN RESELLER
+                 <i class="fas fa-user-plus"></i> JOIN RESELLER
             </a>
-        	<a href="https://subangflasher.github.io/GSMunlockingA12-/" class="link-btn">
-                <i class="fab fa-ulocktool"></i> BYPASS IPHONE
+            <a href="https://subangflasher.github.io/GSMunlockingA12-/" class="link-btn">
+                <i class="fab fa-apple"></i> BYPASS IPHONE
             </a>
             <a href="https://subangflasher.github.io/List-Layanan" class="link-btn">
-                <i class="fab fa-ulocktool"></i> RENT & ACTIVASI
+                <i class="fas fa-key"></i> RENT & ACTIVASI
             </a>
             <a href="https://subangflasher.github.io/USBSERVER-/" class="link-btn">
-                <i class="fab fa-ulocktool"></i> FRP SERVER
+                <i class="fas fa-server"></i> FRP SERVER
             </a>
             <a href="https://wa.me/6281223742357" class="link-btn">
-                <i class="fab fa-whatsapp"></i> WHATSAPP
+                <i class="fab fa-whatsapp"></i> WHATSAPP OFFICIAL
             </a>
             <a href="https://t.me/Badakservice26" class="link-btn">
-                <i class="fab fa-telegram"></i> TELEGRAM
+                <i class="fab fa-telegram-plane"></i> TELEGRAM CUSTOMER SERVICE
             </a>
             <a href="https://www.tiktok.com/@subang_flasher" class="link-btn">
-                <i class="fab fa-tiktok"></i> TIKTOK 
+                <i class="fab fa-tiktok"></i> TIKTOK CHANNEL
             </a>
             <a href="https://www.instagram.com/subang_dev" class="link-btn">
                 <i class="fab fa-instagram"></i> INSTAGRAM
             </a>
             <a href="https://youtube.com/@subangflasher" class="link-btn">
-                <i class="fab fa-youtube"></i> YOUTUBE
+                <i class="fab fa-youtube"></i> YOUTUBE CHANNEL
             </a>
-<a href="https://subangflasher.github.io/Grup/" class="link-btn">
-                <i class="fab "></i> GRUP
+            <a href="https://subangflasher.github.io/Grup/" class="link-btn">
+                <i class="fas fa-users"></i> JOIN GRUP KOMUNITAS
             </a>
             <a href="https://gsmunlockingindonesiateam.com" class="link-btn">
-                <i class="fas fa-globe"></i> WEB <br>GSM UNLOCKING 
+                <i class="fas fa-globe"></i> WEB GSM UNLOCKING
             </a>
             <a href="https://cekceirgsmindonesia.com" class="link-btn">
-                <i class="fas fa-globe"></i> WEB <br>CEK CEIR
+                <i class="fas fa-shield-alt"></i> WEB CEK CEIR
             </a>
             <a href="https://subangflasher.github.io/Drivers/" class="link-btn">
-                <i class="fas fa-file"></i> DRIVER
+                <i class="fas fa-download"></i> DOWNLOAD DRIVER
             </a>
             <a href="https://t.me/SubangFlasher/3" class="link-btn">
-                <i class="fas fa-file"></i> TESTIMONI
+                <i class="fas fa-certificate"></i> TESTIMONI PELANGGAN
             </a>
         </div>
     </div>
 
     <script>
-        
+        // Matrix Background Effect Modifikasi Warna Merah Cyberpunk
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
 
@@ -306,45 +385,46 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         }
-
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
 
-        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%\"'#&_(),.;:?!\\|{}<>[]^~";
-        const fontSize = 16;
+        // Karakter Matrix Katakana + Cyber
+        const characters = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ10X_Z@#$+-*";
+        const fontSize = 14;
         const columns = canvas.width / fontSize;
         const drops = Array(Math.floor(columns)).fill(1);
 
         function drawMatrix() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillStyle = "rgba(5, 5, 8, 0.1)"; // Fade out effect
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.fillStyle = "#0F0"; // Warna Hijau Hacker
-            ctx.font = fontSize + "px monospace";
+            ctx.fillStyle = "rgba(255, 0, 55, 0.8)"; // Warna Matrix Merah Crimson Elegan
+            ctx.font = fontSize + "px 'Orbitron', monospace";
 
             for (let i = 0; i < drops.length; i++) {
                 const text = characters.charAt(Math.floor(Math.random() * characters.length));
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.98) {
                     drops[i] = 0;
                 }
                 drops[i]++;
             }
         }
+        setInterval(drawMatrix, 40);
 
-        setInterval(drawMatrix, 35);
-
-       
+        // Efek Glitch Halus Acak Pada Profile Picture untuk kesan Real Tech
         setInterval(() => {
             const profilePic = document.querySelector('.profile-pic');
-            if (Math.random() > 0.8) {
-                profilePic.style.transform = 'translate(' + (Math.random() * 4 - 2) + 'px, ' + (Math.random() * 4 - 2) + 'px)';
+            if (Math.random() > 0.85) {
+                profilePic.style.transform = `translate(${(Math.random() * 6 - 3)}px, ${(Math.random() * 6 - 3)}px)`;
+                profilePic.style.borderColor = "#ffffff";
                 setTimeout(() => {
                     profilePic.style.transform = 'translate(0,0)';
-                }, 50);
+                    profilePic.style.borderColor = "#ff0037";
+                }, 70);
             }
-        }, 1500);
+        }, 2000);
     </script>
 </body>
 </html>
